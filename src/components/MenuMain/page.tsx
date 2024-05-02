@@ -9,7 +9,6 @@ import { mdiCounter } from '@mdi/js';
 
 
 
-
 const MenuMain = () => {
     return (
         <div className="max-w-[1000px] m-auto grid grid-cols-3 gap-4 mt-6 ">
