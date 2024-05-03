@@ -6,7 +6,7 @@ import SideBarNav from "@/components/SideBarNav/page";
 const Home = () => {
 
   return (
-    <div className="container">
+    <div className="">
       <div className="flex">
         <SideBarNav />
         <div className="ml-7">
