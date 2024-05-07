@@ -62,7 +62,7 @@ export const GraphicsCharts = () => {
             <div>
                 <Chart
                     chartType="Table"
-                    width="100%"
+                    width={"100%"}
                     height="400px"
                     data={data2}
                     options={options2}

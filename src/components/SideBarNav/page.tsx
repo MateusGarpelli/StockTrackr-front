@@ -29,10 +29,10 @@ const SideBarNav = () => {
                         <div className='mr-4'><MenuOutlined /></div>
                         <div>Produtos</div>
                     </Link>
-                    <div className="flex items-center ml-5 cursor-pointer hover:text-[#18637e]">
+                    <Link href="/stock" className="flex items-center ml-5 cursor-pointer hover:text-[#18637e]">
                         <Archive path={mdiArchive} size={1} className='mr-4' />
                         <div>Estoque</div>
-                    </div>
+                    </Link>
                     <div className="flex items-center ml-5 cursor-pointer hover:text-[#18637e]">
                         <div className='mr-4'><Icon path={mdiCounter} size={1} /></div>
                         <div>Quantidade</div>
