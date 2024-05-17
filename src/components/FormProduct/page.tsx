@@ -1,152 +1,162 @@
-'use client'
-import React from 'react'
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import SideBarNav from '@/components/SideBarNav/page'
-
-const formSchema = z.object({
-    nomeProduto: z.string().min(2, { message: 'O Produto deve ter no mínimo 2 letras' }),
-    valor: z.coerce.number().min(1, { message: 'O valor tem que ser no mínimo 1' }),
-    categoria: z.string().min(2, { message: 'A Categoria deve ter no mínimo 2 letras' }),
-    local: z.string().min(2, { message: 'O local deve ter no mínimo 2 letras ' }),
-    quantidade: z.coerce.number().min(1, { message: 'A Quantidade deve ser no mínimo 1 ' }),
-    codigo: z.coerce.number().min(1, { message: 'O Codigo deve ser no mínimo 1' }),
-    peso: z.coerce.number().min(1, { message: 'O Peso deve ser no mínimo 1 kilo' })
-})
-
+"use client"
+import React, { useState } from 'react';
 
 const FormProducts = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            nomeProduto: "",
-            valor: 0,
-            categoria: "",
-            local: "",
-            quantidade: 0,
-            codigo: 0,
-            peso: 0,
-        },
-    })
+    const [formData, setFormData] = useState({
+        nomeProduto: "",
+        valor: "",
+        categoria: "",
+        local: "",
+        quantidade: "",
+        codigo: "",
+        peso: "",
+    });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-    }
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const validate = () => {
+        const newErrors = {};
+
+        if (formData.nomeProduto.length < 2) {
+            newErrors.nomeProduto = 'O Produto deve ter no mínimo 2 letras';
+        }
+        if (formData.valor < 1) {
+            newErrors.valor = 'O valor tem que ser no mínimo 1';
+        }
+        if (formData.categoria.length < 2) {
+            newErrors.categoria = 'A Categoria deve ter no mínimo 2 letras';
+        }
+        if (formData.local.length < 2) {
+            newErrors.local = 'O local deve ter no mínimo 2 letras';
+        }
+        if (formData.quantidade < 1) {
+            newErrors.quantidade = 'A Quantidade deve ser no mínimo 1';
+        }
+        if (formData.codigo < 1) {
+            newErrors.codigo = 'O Codigo deve ser no mínimo 1';
+        }
+        if (formData.peso < 1) {
+            newErrors.peso = 'O Peso deve ser no mínimo 1 kilo';
+        }
+
+        return newErrors;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length === 0) {
+            console.log(formData);
+        } else {
+            setErrors(validationErrors);
+        }
+    };
+
     return (
-        <div className=' border p-10 space-y-4 justify-center items-center ml-80 '>
-            <Form {...form}>
-
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex-col justify-center items-center space-y-2.5 m-auto max-w-64  text-[#34b3e2] ">
-                    <div className='space-y-3 '>
-                        <FormField
-                            control={form.control}
-                            name="nomeProduto"
-                            render={({ field }) => (
-                                <FormItem className='rounded-xl '>
-                                    <FormLabel>Nome do Produto</FormLabel>
-                                    <FormControl>
-                                        <Input className='rounded-xl' placeholder="Nome" {...field} />
-                                    </FormControl>
-                                    <FormMessage className='text-red-600' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="valor"
-                            render={({ field }) => (
-                                <FormItem className='rounded-xl'>
-                                    <FormLabel>Valor do produto</FormLabel>
-                                    <FormControl>
-                                        <Input className='rounded-xl' placeholder="Valor" {...field} />
-                                    </FormControl>
-                                    <FormMessage className='text-red-600' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="categoria"
-                            render={({ field }) => (
-                                <FormItem className='rounded-xl'>
-                                    <FormLabel>Categoria do produto</FormLabel>
-                                    <FormControl>
-                                        <Input className='rounded-xl' placeholder="Categoria" {...field} />
-                                    </FormControl>
-                                    <FormMessage className='text-red-600' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="local"
-                            render={({ field }) => (
-                                <FormItem className='rounded-xl'>
-                                    <FormLabel>Nome do local</FormLabel>
-                                    <FormControl>
-                                        <Input className='rounded-xl' placeholder="Local" {...field} />
-                                    </FormControl>
-                                    <FormMessage className='text-red-600' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="quantidade"
-                            render={({ field }) => (
-                                <FormItem className='rounded-xl'>
-                                    <FormLabel>quantidade</FormLabel>
-                                    <FormControl>
-                                        <Input className='rounded-xl' placeholder="quantidade" {...field} />
-                                    </FormControl>
-                                    <FormMessage className='text-red-600' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="codigo"
-                            render={({ field }) => (
-                                <FormItem className='rounded-xl'>
-                                    <FormLabel>Codigo do Produto</FormLabel>
-                                    <FormControl>
-                                        <Input className='rounded-xl' placeholder="Codigo" {...field} />
-                                    </FormControl>
-                                    <FormMessage className='text-red-600' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="peso"
-                            render={({ field }) => (
-                                <FormItem className='rounded-xl'>
-                                    <FormLabel>Peso do Produto</FormLabel>
-                                    <FormControl>
-                                        <Input className='rounded-xl' placeholder="Peso" {...field} />
-                                    </FormControl>
-                                    <FormMessage className='text-red-600' />
-                                </FormItem>
-                            )}
-                        />
-
-                        <Button type="submit" className='hover:border-2 '>Submit</Button>
+        <div className=' bg-gray-100 flex items-center justify-center mt-7 '>
+            <div className='w-full max-w-2xl bg-white p-8 rounded-lg shadow-md'>
+                <h2 className='text-2xl font-bold mb-6 text-gray-800'>Cadastro de Produto</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className='block text-gray-700'>Nome do Produto</label>
+                            <input
+                                className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
+                                placeholder="Nome"
+                                name="nomeProduto"
+                                value={formData.nomeProduto}
+                                onChange={handleChange}
+                            />
+                            {errors.nomeProduto && <span className='text-red-600 text-sm'>{errors.nomeProduto}</span>}
+                        </div>
+                        <div>
+                            <label className='block text-gray-700'>Valor do produto</label>
+                            <input
+                                className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
+                                placeholder="Valor"
+                                name="valor"
+                                type="number"
+                                value={formData.valor}
+                                onChange={handleChange}
+                            />
+                            {errors.valor && <span className='text-red-600 text-sm'>{errors.valor}</span>}
+                        </div>
+                        <div>
+                            <label className='block text-gray-700'>Categoria do produto</label>
+                            <input
+                                className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
+                                placeholder="Categoria"
+                                name="categoria"
+                                value={formData.categoria}
+                                onChange={handleChange}
+                            />
+                            {errors.categoria && <span className='text-red-600 text-sm'>{errors.categoria}</span>}
+                        </div>
+                        <div>
+                            <label className='block text-gray-700'>Nome do local</label>
+                            <input
+                                className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
+                                placeholder="Local"
+                                name="local"
+                                value={formData.local}
+                                onChange={handleChange}
+                            />
+                            {errors.local && <span className='text-red-600 text-sm'>{errors.local}</span>}
+                        </div>
+                        <div>
+                            <label className='block text-gray-700'>Quantidade</label>
+                            <input
+                                className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
+                                placeholder="Quantidade"
+                                name="quantidade"
+                                type="number"
+                                value={formData.quantidade}
+                                onChange={handleChange}
+                            />
+                            {errors.quantidade && <span className='text-red-600 text-sm'>{errors.quantidade}</span>}
+                        </div>
+                        <div>
+                            <label className='block text-gray-700'>Código do Produto</label>
+                            <input
+                                className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
+                                placeholder="Código"
+                                name="codigo"
+                                type="number"
+                                value={formData.codigo}
+                                onChange={handleChange}
+                            />
+                            {errors.codigo && <span className='text-red-600 text-sm'>{errors.codigo}</span>}
+                        </div>
+                        <div>
+                            <label className='block text-gray-700'>Peso do Produto</label>
+                            <input
+                                className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
+                                placeholder="Peso"
+                                name="peso"
+                                type="number"
+                                value={formData.peso}
+                                onChange={handleChange}
+                            />
+                            {errors.peso && <span className='text-red-600 text-sm'>{errors.peso}</span>}
+                        </div>
                     </div>
+                    <button
+                        type="submit"
+                        className='w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600'
+                    >
+                        Cadastrar
+                    </button>
                 </form>
-            </Form>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default FormProducts
+export default FormProducts;
