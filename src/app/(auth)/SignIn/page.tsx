@@ -3,19 +3,34 @@
 import Link from "next/link";
 import Inovux from "../../../../public/stockTrackr.png";
 import Image from "next/image";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import axios from "axios";
 
 export const SignIn = () => {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
+    const URL = "http://172.17.57.127:5000/";
+
     
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+
+        const res = await axios.post(`${URL}loginUser`, {
+            email,
+            senha,
+        })
+
+        console.log(res);
+        
+    };
 
     return (
         <div className="max-w-[350px] h-[400px] border-2 border-gray-400 m-auto flex flex-col mt-32   ">
             <Image  className="-mt-16 m-auto" alt="inovux" src={Inovux} height={600} width={400}></Image>
-            <div className="flex flex-col p-2 -mt-14 ">
+            <form action=""onSubmit={handleSubmit} className="mb-[125px]" >
+            <div className="flex flex-col p-2  ">
                 <div className="flex-1 mt-10">
                     <input value={email} onChange={(e) => {setEmail(e.target.value)}} type="text"  placeholder="E-mail" className=" w-[320px] placeholder:text-[#545454] outline-none border-b-2 text-[#545454] hover:border-[#34b3e2] hover:placeholder:text-[#34b3e2] hover:text-[#34b3e2]" />
                 </div>
@@ -30,9 +45,10 @@ export const SignIn = () => {
                 </Link>
 
             </div>
-            <Link href="/" className="mb-[300px] m-auto mt-[80px]">
+            <Link href="/" className=" ml-[9px]">
                 <button className="border rounded-full w-28 h-9 font-semibold text-base border-gray-600 hover:text-[#34b3e2] hover:border-[#34b3e2]">Login</button>
             </Link>
+            </form>
         </div>
     )
 }

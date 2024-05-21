@@ -5,6 +5,7 @@ import Inovux from "../../../../public/stockTrackr.png";
 import setaEsquerda from "../../../../public/arrow-left-line.png";
 import { FormEvent, useState } from "react";
 import { instance } from "@/utils/instance";
+import axios from "axios";
 
 export const SignUp = () => {
 
@@ -12,25 +13,27 @@ export const SignUp = () => {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
+    const URL = "http://172.17.57.127:5000/";
+
     
 
-    // const handleSubmit = async (e: FormEvent) => {
-    //     e.preventDefault();
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
 
-    //     const res = await instance.post(`usuario`, {
-    //         nome,
-    //         email,
-    //         senha,
-    //     })
+        const res = await axios.post(`${URL}cadastrarUser`, {
+            nome,
+            email,
+            senha,
+        })
 
-    //     console.log(res);
+        console.log(res);
         
-    // };
+    };
 
     return (
         <div className="max-w-[350px] h-[400px] border-2 border-gray-400 m-auto flex flex-col mt-32   ">
             <Image className="-mt-16 m-auto" alt="inovux" src={Inovux} height={600} width={400}></Image>
-            {/* <form action=""onSubmit={handleSubmit} > */}
+            <form action=""onSubmit={handleSubmit} >
                 <div className="flex flex-col p-2 -mt-14">
                     <Link href="/SignIn" className="w-[30px] h-[30px] ">
                         <Image src={setaEsquerda} alt="setaEsquerda" width={30} height={30}></Image>
@@ -45,10 +48,10 @@ export const SignUp = () => {
                         <input type="password" value={senha} onChange={(e) => { setSenha(e.target.value) }} placeholder="Senha" className=" outline-none border-b-2 placeholder:text-[#545454] w-[320px] hover:border-[#34b3e2] hover:placeholder:text-[#34b3e2] hover:text-[#34b3e2]" />
                     </div>
                 </div>
-            <div className="mb-[300px] m-auto mt-[50px]">
+            <div className="mb-[300px] ml-[200px] mt-[40px]">
                 <button type="submit"  className="border rounded-full w-36 h-11 font-semibold text-base border-gray-600 hover:text-[#34b3e2] hover:border-[#34b3e2]">Cadastrar</button>
             </div>
-            {/* </form> */}
+            </form>
         </div>
     )
 }
