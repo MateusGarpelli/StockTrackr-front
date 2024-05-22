@@ -1,6 +1,7 @@
 import HeaderStock from "@/components/HeaderStock/page"
 import SideBarNav from "@/components/SideBarNav/page"
 import StockProduct, { StockFilter } from "@/components/StockFilter/page"
+import StockMain from "@/components/StockMain/page"
 
 const page = () => {
   return (
@@ -12,7 +13,12 @@ const page = () => {
             <HeaderStock />
           </div>
           <div className="ml-5">
-            <StockFilter/>
+            <div>
+              <StockFilter />
+            </div>
+            <div className="mt-[80px]">
+              <StockMain />
+            </div>
           </div>
         </div>
       </div>

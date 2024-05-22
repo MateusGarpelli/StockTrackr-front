@@ -1,61 +1,36 @@
 "use client"
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { FormEvent, useState } from 'react';
 
 const FormProducts = () => {
-    const [formData, setFormData] = useState({
-        nomeProduto: "",
-        valor: "",
-        categoria: "",
-        local: "",
-        quantidade: "",
-        codigo: "",
-        peso: "",
-    });
 
-    const [errors, setErrors] = useState({});
+    const [nome,setNome] = useState("");
+    const [valor,setValor] = useState("");
+    const [categoria,setCategoria] = useState("");
+    const [peso,setPeso] = useState("");
+    const [local,setLocal] = useState("");
+    const [quantidade,setQuantidade] = useState("");
+    const [codigo,setCodigo] = useState("");
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+    const URL = "http://192.168.1.102:5000/"
 
-    const validate = () => {
-        const newErrors = {};
-
-        if (formData.nomeProduto.length < 2) {
-            newErrors.nomeProduto = 'O Produto deve ter no mínimo 2 letras';
-        }
-        if (formData.valor < 1) {
-            newErrors.valor = 'O valor tem que ser no mínimo 1';
-        }
-        if (formData.categoria.length < 2) {
-            newErrors.categoria = 'A Categoria deve ter no mínimo 2 letras';
-        }
-        if (formData.local.length < 2) {
-            newErrors.local = 'O local deve ter no mínimo 2 letras';
-        }
-        if (formData.quantidade < 1) {
-            newErrors.quantidade = 'A Quantidade deve ser no mínimo 1';
-        }
-        if (formData.codigo < 1) {
-            newErrors.codigo = 'O Codigo deve ser no mínimo 1';
-        }
-        if (formData.peso < 1) {
-            newErrors.peso = 'O Peso deve ser no mínimo 1 kilo';
-        }
-
-        return newErrors;
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const validationErrors = validate();
-        if (Object.keys(validationErrors).length === 0) {
-            console.log(formData);
-        } else {
-            setErrors(validationErrors);
+        try {
+            const res = await axios.post(`${URL}cadastrarProduto`, {
+                nome,
+                peso,
+                valor,
+                categoria,
+                codigo,
+                local,
+                quantidade,
+            });
+            console.log(res.data);
+            alert("Produto cadastrado com sucesso!");
+        } catch (error) {
+            console.error("Erro ao cadastrar produto:", error);
+            alert("Erro ao cadastrar produto.");
         }
     };
 
@@ -71,10 +46,9 @@ const FormProducts = () => {
                                 className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
                                 placeholder="Nome"
                                 name="nomeProduto"
-                                value={formData.nomeProduto}
-                                onChange={handleChange}
+                                value={nome}
+                                onChange={(e) => {setNome(e.target.value)}}
                             />
-                            {errors.nomeProduto && <span className='text-red-600 text-sm'>{errors.nomeProduto}</span>}
                         </div>
                         <div>
                             <label className='block text-gray-700'>Valor do produto</label>
@@ -83,10 +57,9 @@ const FormProducts = () => {
                                 placeholder="Valor"
                                 name="valor"
                                 type="number"
-                                value={formData.valor}
-                                onChange={handleChange}
+                                value={valor}
+                                onChange={(e) => {setValor(e.target.value)}}
                             />
-                            {errors.valor && <span className='text-red-600 text-sm'>{errors.valor}</span>}
                         </div>
                         <div>
                             <label className='block text-gray-700'>Categoria do produto</label>
@@ -94,10 +67,9 @@ const FormProducts = () => {
                                 className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
                                 placeholder="Categoria"
                                 name="categoria"
-                                value={formData.categoria}
-                                onChange={handleChange}
+                                value={categoria}
+                                onChange={(e) => {setCategoria(e.target.value)}}
                             />
-                            {errors.categoria && <span className='text-red-600 text-sm'>{errors.categoria}</span>}
                         </div>
                         <div>
                             <label className='block text-gray-700'>Nome do local</label>
@@ -105,10 +77,9 @@ const FormProducts = () => {
                                 className='w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600'
                                 placeholder="Local"
                                 name="local"
-                                value={formData.local}
-                                onChange={handleChange}
+                                value={local}
+                                onChange={(e) => {setLocal(e.target.value)}}
                             />
-                            {errors.local && <span className='text-red-600 text-sm'>{errors.local}</span>}
                         </div>
                         <div>
                             <label className='block text-gray-700'>Quantidade</label>
@@ -117,10 +88,9 @@ const FormProducts = () => {
                                 placeholder="Quantidade"
                                 name="quantidade"
                                 type="number"
-                                value={formData.quantidade}
-                                onChange={handleChange}
+                                value={quantidade}
+                                onChange={(e) => {setQuantidade(e.target.value)}}
                             />
-                            {errors.quantidade && <span className='text-red-600 text-sm'>{errors.quantidade}</span>}
                         </div>
                         <div>
                             <label className='block text-gray-700'>Código do Produto</label>
@@ -129,10 +99,10 @@ const FormProducts = () => {
                                 placeholder="Código"
                                 name="codigo"
                                 type="number"
-                                value={formData.codigo}
-                                onChange={handleChange}
+                                value={codigo}
+                                onChange={(e) => {setCodigo(e.target.value)}}
+
                             />
-                            {errors.codigo && <span className='text-red-600 text-sm'>{errors.codigo}</span>}
                         </div>
                         <div>
                             <label className='block text-gray-700'>Peso do Produto</label>
@@ -141,10 +111,9 @@ const FormProducts = () => {
                                 placeholder="Peso"
                                 name="peso"
                                 type="number"
-                                value={formData.peso}
-                                onChange={handleChange}
+                                value={peso}
+                                onChange={(e) => {setPeso(e.target.value)}}
                             />
-                            {errors.peso && <span className='text-red-600 text-sm'>{errors.peso}</span>}
                         </div>
                     </div>
                     <button

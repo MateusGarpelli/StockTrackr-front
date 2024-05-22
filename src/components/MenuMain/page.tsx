@@ -14,32 +14,31 @@ import axios from 'axios';
 
 const MenuMain = () => {
 
-    const URL = "http://172.17.57.127:5000/";
+    const URL = "http://192.168.1.102:5000/";
 
     const [quantity, setQuantity] = useState("");
     const [price, setPrice] = useState("");
-    const [stock, setStock ] = useState("");
+    const [stock, setStock] = useState("");
 
+    
 
     useEffect(() => {
 
         const getValues = async () => {
 
-            const res = await axios.get(`${URL}quantidade`
-            
-            )
-            .then(res => {
-                setQuantity(res.data.quantity)
+            const res = await axios.get(`${URL}quantidade`)
+                .then(res => {
+                    setQuantity(res.data.quantity)
                 })
-                const resPrice = await axios.get(`${URL}preco`
+            const resPrice = await axios.get(`${URL}preco`
             )
-            .then(resPrice => {
-                setPrice(resPrice.data.price)
+                .then(resPrice => {
+                    setPrice(resPrice.data.price)
                 })
-                const resStock = await axios.get(`${URL}estoque`
+            const resStock = await axios.get(`${URL}estoque`
             )
-            .then(resStock => {
-                setStock(resStock.data.stock)
+                .then(resStock => {
+                    setStock(resStock.data.stock)
                 })
         };
 
