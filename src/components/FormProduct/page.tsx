@@ -3,16 +3,15 @@ import axios from 'axios';
 import React, { FormEvent, useState } from 'react';
 
 const FormProducts = () => {
+    const [nome, setNome] = useState("");
+    const [valor, setValor] = useState("");
+    const [categoria, setCategoria] = useState("");
+    const [peso, setPeso] = useState("");
+    const [local, setLocal] = useState("");
+    const [quantidade, setQuantidade] = useState("");
+    const [codigo, setCodigo] = useState("");
 
-    const [nome,setNome] = useState("");
-    const [valor,setValor] = useState("");
-    const [categoria,setCategoria] = useState("");
-    const [peso,setPeso] = useState("");
-    const [local,setLocal] = useState("");
-    const [quantidade,setQuantidade] = useState("");
-    const [codigo,setCodigo] = useState("");
-
-    const URL = "http://192.168.1.102:5000/"
+    const URL = "http://192.168.1.102:5000/";
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -35,7 +34,7 @@ const FormProducts = () => {
     };
 
     return (
-        <div className=' bg-gray-100 flex items-center justify-center mt-7 '>
+        <div className='bg-gray-100 flex items-center justify-center mt-7'>
             <div className='w-full max-w-2xl bg-white p-8 rounded-lg shadow-md'>
                 <h2 className='text-2xl font-bold mb-6 text-gray-800'>Cadastro de Produto</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -47,7 +46,7 @@ const FormProducts = () => {
                                 placeholder="Nome"
                                 name="nomeProduto"
                                 value={nome}
-                                onChange={(e) => {setNome(e.target.value)}}
+                                onChange={(e) => setNome(e.target.value)}
                             />
                         </div>
                         <div>
@@ -58,7 +57,7 @@ const FormProducts = () => {
                                 name="valor"
                                 type="number"
                                 value={valor}
-                                onChange={(e) => {setValor(e.target.value)}}
+                                onChange={(e) => setValor(e.target.value)}
                             />
                         </div>
                         <div>
@@ -68,7 +67,7 @@ const FormProducts = () => {
                                 placeholder="Categoria"
                                 name="categoria"
                                 value={categoria}
-                                onChange={(e) => {setCategoria(e.target.value)}}
+                                onChange={(e) => setCategoria(e.target.value)}
                             />
                         </div>
                         <div>
@@ -78,7 +77,7 @@ const FormProducts = () => {
                                 placeholder="Local"
                                 name="local"
                                 value={local}
-                                onChange={(e) => {setLocal(e.target.value)}}
+                                onChange={(e) => setLocal(e.target.value)}
                             />
                         </div>
                         <div>
@@ -89,7 +88,7 @@ const FormProducts = () => {
                                 name="quantidade"
                                 type="number"
                                 value={quantidade}
-                                onChange={(e) => {setQuantidade(e.target.value)}}
+                                onChange={(e) => setQuantidade(e.target.value)}
                             />
                         </div>
                         <div>
@@ -100,8 +99,7 @@ const FormProducts = () => {
                                 name="codigo"
                                 type="number"
                                 value={codigo}
-                                onChange={(e) => {setCodigo(e.target.value)}}
-
+                                onChange={(e) => setCodigo(e.target.value)}
                             />
                         </div>
                         <div>
@@ -112,7 +110,7 @@ const FormProducts = () => {
                                 name="peso"
                                 type="number"
                                 value={peso}
-                                onChange={(e) => {setPeso(e.target.value)}}
+                                onChange={(e) => setPeso(e.target.value)}
                             />
                         </div>
                     </div>

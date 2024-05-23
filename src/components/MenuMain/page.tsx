@@ -35,17 +35,9 @@ const MenuMain = () => {
                 .then(resPrice => {
                     setPrice(resPrice.data.price)
                 })
-            const resStock = await axios.get(`${URL}estoque`
-            )
-                .then(resStock => {
-                    setStock(resStock.data.stock)
-                })
         };
-
         getValues();
-
     }, []
-
     )
 
 
@@ -56,10 +48,6 @@ const MenuMain = () => {
                 <div className='flex bg-[#EEE] py-2 px-4 rounded-lg w-[250px]' >
                     <Quantity path={mdiCounter} size={1} color='#18637e' />
                     <span className='ml-3'>Quantidade:{quantity}</span>
-                </div>
-                <div className='flex bg-[#EEE] py-2 px-4 rounded-lg w-[250px] '>
-                    <Storage path={mdiArchive} size={1} color='#18637e' />
-                    <span className='ml-3'>Estoque: {stock}</span>
                 </div>
                 <div className='flex bg-[#EEE] py-2 px-4 rounded-lg w-[250px] '>
                     <Price path={mdiCash} size={1} color='#18637e' />
