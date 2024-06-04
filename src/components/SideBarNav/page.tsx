@@ -23,12 +23,12 @@ const SideBarNav = () => {
 
     return (
         <div className="border bg-[#F6F6F6] text-[#34b3e2] h-[750px] max-w-[250px] rounded-sm p-4 space-y-4 flex-col justify-center items-center">
-            <Link href="/">
+            <Link href="/HomeMain">
                 <Image src='/stockTrackr.png' alt="Logo" width={200} height={200} />
             </Link>
             <div className='flex flex-col justify-between h-[520px]'>
                 <div className="space-y-4 justify-center items-center ">
-                    <Link href='/' className="flex items-center ml-5 cursor-pointer hover:text-[#18637e]">
+                    <Link href='/HomeMain' className="flex items-center ml-5 cursor-pointer hover:text-[#18637e]">
                         <div><HomeOutlined width={30} height={30} className='mr-4' style={{ fontSize: 25 }} /></div>
                         <div>Home</div>
                     </Link>

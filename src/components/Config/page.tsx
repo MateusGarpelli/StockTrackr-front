@@ -1,61 +1,77 @@
-import React, { useState } from 'react';
-import { Modal, Button, Input, Switch, Select } from 'antd';
+import { Modal, Button, Input, Upload, message } from 'antd';
+import { useState } from 'react';
+import { UploadOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
-const { Option } = Select;
+const Config = ({ visible, handleOk, handleCancel }) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [displayName, setDisplayName] = useState("");
+    const [bio, setBio] = useState("");
+    const [profileImage, setProfileImage] = useState(null);
 
-const ConfigModal = ({ visible, handleOk, handleCancel }) => {
-    const [userName, setUserName] = useState("John Doe");
-    const [email, setEmail] = useState("john.doe@example.com");
-    const [notifications, setNotifications] = useState(true);
-    const [theme, setTheme] = useState("light");
-    const [language, setLanguage] = useState("en");
+    const handleSave = async () => {
+        message.success('Configurações salvas com sucesso!');
+    };
+
+    
 
     return (
         <Modal
             title="Configurações"
             visible={visible}
-            onOk={handleOk}
+            onOk={handleSave}
             onCancel={handleCancel}
             footer={[
-                <Button key="cancel" onClick={handleCancel}>
+                <Button key="cancel" onClick={handleCancel} >
                     Cancelar
                 </Button>,
-                <Button key="ok" type="primary" onClick={handleOk} className="bg-blue-500 hover:bg-blue-600 text-white">
-                    OK
+                <Button key="save" type="primary" onClick={handleSave} style={{ backgroundColor: '#34b3e2', borderColor: '#34b3e2', display:""} }>
+                    Salvar
                 </Button>,
             ]}
         >
             <div className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Nome de Usuário</label>
-                    <Input value={userName} onChange={e => setUserName(e.target.value)} />
+                    <h3>Configurações da Conta</h3>
+                    <Input
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="mb-2"
+                    />
+                    <Input.Password
+                        placeholder="Senha"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="mb-2"
+                    />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <Input value={email} onChange={e => setEmail(e.target.value)} />
-                </div>
-                <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">Notificações</span>
-                    <Switch checked={notifications} onChange={setNotifications} />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Tema</label>
-                    <Select value={theme} onChange={setTheme} className="w-full">
-                        <Option value="light">Claro</Option>
-                        <Option value="dark">Escuro</Option>
-                    </Select>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Idioma</label>
-                    <Select value={language} onChange={setLanguage} className="w-full">
-                        <Option value="en">Inglês</Option>
-                        <Option value="pt">Português</Option>
-                        <Option value="es">Espanhol</Option>
-                    </Select>
+                    <h3>Configurações de Perfil</h3>
+                    <Input
+                        placeholder="Nome de Exibição"
+                        value={displayName}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                        className="mb-2"
+                    />
+                    <Input.TextArea
+                        placeholder="Bio/Descrição"
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
+                        className="mb-2"
+                    />
+                    <Upload
+                        name="profileImage"
+                        action="URL_PARA_UPLOAD"
+                        listType="picture"
+                    >
+                        <Button icon={<UploadOutlined />}>Upload Foto do Perfil</Button>
+                    </Upload>
                 </div>
             </div>
         </Modal>
     );
-}
+};
 
-export default ConfigModal;
+export default Config;

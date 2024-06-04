@@ -1,20 +1,20 @@
 "use client"
 import React, { FormEvent, useEffect, useState } from 'react';
-import { Chart } from "react-google-charts";
 import Price from '@mdi/react';
 import { mdiCash } from '@mdi/js';
-import Storage from '@mdi/react';
-import { mdiArchive } from '@mdi/js';
 import Alert from '@mdi/react';
 import { mdiAlertBox } from '@mdi/js';
 import Quantity from '@mdi/react';
 import { mdiCounter } from '@mdi/js';
 import GraphicsCharts from '../GraphicsCharts/page';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const MenuMain = () => {
 
     const URL = "http://172.17.114.23:5000/";
+
+    const route = useRouter();
 
     const [quantity, setQuantity] = useState("");
     const [price, setPrice] = useState("");
@@ -26,10 +26,11 @@ const MenuMain = () => {
                 const resTotal = await axios.get(`${URL}quantidade`);
                 const total = resTotal.data.total;
                 setQuantity(total);
-    
+                
                 const resSomaTotal = await axios.get(`${URL}preco`);
                 const somaTotal = resSomaTotal.data.soma_total;
                 setPrice(somaTotal);
+
             } catch (error) {
                 console.error('Erro ao buscar dados da API:', error);
             }

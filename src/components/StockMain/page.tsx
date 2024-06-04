@@ -39,6 +39,10 @@ const StockMain = () => {
                         <tr>
                             <th className="py-2 px-4 border-b">Nome do Produto</th>
                             <th className="py-2 px-4 border-b">Local</th>
+                            <th className="py-2 px-4 border-b">valor</th>
+                            <th className="py-2 px-4 border-b">categoria</th>
+                            <th className="py-2 px-4 border-b">quantidade</th>
+                            <th className="py-2 px-4 border-b">peso</th>
                             <th className="py-2 px-4 border-b">Faltando</th>
                         </tr>
                     </thead>
@@ -47,6 +51,10 @@ const StockMain = () => {
                             <tr key={index}>
                                 <td className="py-2 px-4 border-b">{produto.nome}</td>
                                 <td className="py-2 px-4 border-b">{produto.local}</td>
+                                <td className="py-2 px-4 border-b">{produto.valor}</td>
+                                <td className="py-2 px-4 border-b">{produto.categoria}</td>
+                                <td className="py-2 px-4 border-b">{produto.quantidade}</td>
+                                <td className="py-2 px-4 border-b">{produto.peso}</td>
                                 <td className="py-2 px-4 border-b">
                                     {produto.faltando ? (
                                         <span className="text-red-500">Sim</span>

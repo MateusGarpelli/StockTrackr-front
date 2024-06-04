@@ -34,7 +34,7 @@ export const SignUp = () => {
             <Image className="-mt-16 m-auto" alt="inovux" src={Inovux} height={600} width={400}></Image>
             <form action=""onSubmit={handleSubmit} >
                 <div className="flex flex-col p-2 -mt-14">
-                    <Link href="/SignIn" className="w-[30px] h-[30px] ">
+                    <Link href="/" className="w-[30px] h-[30px] ">
                         <Image src={setaEsquerda} alt="setaEsquerda" width={30} height={30}></Image>
                     </Link>
                     <div className="flex-1 mt-7">

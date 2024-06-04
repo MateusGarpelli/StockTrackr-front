@@ -43,13 +43,13 @@ const ModalProfile = ({ visible, handleOk, handleCancel }) => {
                 <div className='pb-3'>
                     <p><strong>Nome:</strong> {userData.nome}</p>
                     <p><strong>Email:</strong> {userData.email}</p>
-                    <p><strong>Idade:</strong> {userData.idade}</p>
+                    <p><strong>Idade:</strong> {userData.senha}</p>
                 </div>
             ) : (
                 <p>Carregando...</p>
             )}
         <div>
-            <Link className='mt-5 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' href="SignIn">Sair</Link>
+            <Link className='mt-5 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' href="/">Sair</Link>
         </div>
         </Modal>
     );

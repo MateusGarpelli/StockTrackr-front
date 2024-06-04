@@ -1,16 +1,21 @@
 import HeaderMenu from "@/components/HeaderMenu/page";
 import MenuMain from "@/components/MenuMain/page";
 import SideBarNav from "@/components/SideBarNav/page";
-import SignIn from "@/components/SignIn/page";
 
-const Home = () => {
+const HomeMain = () => {
 
   
   return (
     <div className="">
-      <SignIn/>
+      <div className="flex">
+        <SideBarNav />
+        <div className="ml-7">
+          <HeaderMenu />
+          <MenuMain />
+        </div>
+      </div>
     </div>
   )
 }
 
-export default Home;
+export default HomeMain;
