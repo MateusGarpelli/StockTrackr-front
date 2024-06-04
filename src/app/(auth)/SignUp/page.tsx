@@ -4,7 +4,6 @@ import Link from "next/link";
 import Inovux from "../../../../public/stockTrackr.png";
 import setaEsquerda from "../../../../public/arrow-left-line.png";
 import { FormEvent, useState } from "react";
-import { instance } from "@/utils/instance";
 import axios from "axios";
 
 export const SignUp = () => {

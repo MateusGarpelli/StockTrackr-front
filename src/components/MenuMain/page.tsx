@@ -14,12 +14,29 @@ import axios from 'axios';
 
 const MenuMain = () => {
 
-    const URL = "http://192.168.1.102:5000/";
+    const URL = "http://172.17.114.23:5000/";
 
     const [quantity, setQuantity] = useState("");
     const [price, setPrice] = useState("");
-    const [stock, setStock] = useState("");
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const resTotal = await axios.get(`${URL}quantidade`);
+                const total = resTotal.data.total;
+                setQuantity(total);
+    
+                const resSomaTotal = await axios.get(`${URL}preco`);
+                const somaTotal = resSomaTotal.data.soma_total;
+                setPrice(somaTotal);
+            } catch (error) {
+                console.error('Erro ao buscar dados da API:', error);
+            }
+        };
+    
+        fetchData();
+    }, []);
     
 
     useEffect(() => {

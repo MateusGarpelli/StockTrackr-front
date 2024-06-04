@@ -1,26 +1,34 @@
 "use client"
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const StockMain = () => {
-
     const URL = "http://192.168.1.102:5000/";
+    const [produtos, setProdutos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // useEffect(() => {
-    //     const getProdutos = async () => {
-    //         const res = await axios.get(`${URL}`)
-    //         .then(res => {
-    //             setProdutos(res.data.quantity)
-    //         })
-    //     }
-    // },[]);
+    useEffect(() => {
+        const getProdutos = async () => {
+            try {
+                const res = await axios.get(`${URL}produto`);
+                setProdutos(res.data);
+            } catch (err) {
+                console.error("Erro ao buscar produtos:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        getProdutos();
+    }, []);
 
-    const produtos = [
-        { nome: "Produto 1", local: "Armazém A", faltando: true },
-        { nome: "Produto 2", local: "Armazém B", faltando: false },
-        { nome: "Produto 3", local: "Armazém C", faltando: true },
-        { nome: "Produto 4", local: "Armazém D", faltando: false },
-    ];
+    if (loading) {
+        return <div>Carregando...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <div className="container mx-auto p-4">
@@ -53,6 +61,6 @@ const StockMain = () => {
             </div>
         </div>
     );
-}
+};
 
 export default StockMain;

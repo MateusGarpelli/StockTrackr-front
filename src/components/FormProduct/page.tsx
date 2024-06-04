@@ -11,7 +11,7 @@ const FormProducts = () => {
     const [quantidade, setQuantidade] = useState("");
     const [codigo, setCodigo] = useState("");
 
-    const URL = "http://192.168.1.102:5000/";
+    const URL = "http://172.17.114.23:5000/";
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();

@@ -1,61 +1,81 @@
 "use client"
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 
+const URL = "http://172.17.114.23:5000/";
 
-export const data = [
-    ["Produto", "Quantidade"],
-    ["teclados", 20],
-    ["Mouses", 15],
-    ["brinquedos", 30],
-    ["Canetas", 25],
-    ["Garrafas", 10],
-];
+const GraphicsCharts = () => {
+    const [produtos, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-export const options = {
-    title: "Quantidade de Produtos",
-};
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`${URL}produto`);
+                setProducts(res.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Erro ao buscar dados:", error);
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
-export const data2 = [
-    ["Lista de entrada de item", "local", "Em falta?"],
-    ["teclados", "B12", false],
-    ["Mouses", "C102", true],
-    ["brinquedos", "A25", false],
-    ["Canetas", "B17", false],
-    ["Garrafas", "F29", true],
-];
+    if (loading) {
+        return <div>Carregando...</div>;
+    }
 
-export const options2 = {
-    title: "Company Performance",
-    curveType: "function",
-    legend: { position: "bottom" },
-    pageSize: 10,
-};
+    const productData = produtos.map(produto => [produto.nome, produto.quantidade]);
+    const productTableData = produtos.map(produto => [produto.nome, produto.local, produto.quantidade === 0]);
+    const productWeightData = produtos.map(produto => [produto.nome, produto.peso, "#34b3e2"]);
 
-export const data3 = [
-    ["Produtos", "Peso", { role: "style" }],
-    ["teclados", 20.0, "#34b3e2"],
-    ["Mouses", 10.49, "#34b3e2"],
-    ["brinquedos", 19.3, "#34b3e2"],
-    ["Canetas", 21.45, "#34b3e2"],
-    ["Garrafas", 15.0, "#34b3e2"],
-];
+    const dataPieChart = [
+        ["Produto", "Quantidade"],
+        ...productData
+    ];
 
-export const GraphicsCharts = () => {
+    const dataTable = [
+        ["Lista de entrada de item", "local", "Em falta?"],
+        ...productTableData
+    ];
+
+    const dataColumnChart = [
+        ["Produtos", "Peso", { role: "style" }],
+        ...productWeightData
+    ];
+
+    const optionsPieChart = {
+        title: "Quantidade de Produtos",
+    };
+
+    const optionsTable = {
+        title: "Lista de Produtos",
+        curveType: "function",
+        legend: { position: "bottom" },
+        pageSize: 10,
+    };
+
     return (
         <div>
             <div className='flex'>
-                <div >
+                <div>
                     <Chart
                         chartType="PieChart"
-                        data={data}
-                        options={options}
+                        data={dataPieChart}
+                        options={optionsPieChart}
                         width={"100%"}
                         height={"300px"}
                     />
                 </div>
                 <div>
-                    <Chart chartType="ColumnChart" width="600px" height="300px" data={data3}   />
+                    <Chart 
+                        chartType="ColumnChart" 
+                        width="600px" 
+                        height="300px" 
+                        data={dataColumnChart} 
+                    />
                 </div>
             </div>
 
@@ -64,13 +84,12 @@ export const GraphicsCharts = () => {
                     chartType="Table"
                     width={"100%"}
                     height="400px"
-                    data={data2}
-                    options={options2}
+                    data={dataTable}
+                    options={optionsTable}
                 />
             </div>
-
         </div>
-    )
+    );
 }
 
 export default GraphicsCharts;
