@@ -15,6 +15,9 @@
       <ul>
         <li>Login</li>
         <li>Cadastro</li>
+        <li>Home</li>
+        <li>produto</li>
+        <li>estoque</li>
       </ul>
     </li>
   </ul>
@@ -23,6 +26,7 @@
   <ul>
     <li>Funcionalidade1: Permite o cadastro detalhado de produtos.</li>
     <li>Funcionalidade2: Oferece um sistema de localização eficiente, ajudando os usuários a encontrar rapidamente a localização física de cada produto dentro do armazém ou loja.</li>
+    <li>Funcionalidade3: Ver detalhes do estoque.</li>
   </ul>
 
   <h2>Versionamento:</h2>
